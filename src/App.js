@@ -9,8 +9,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { Routes, Route, Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import { styled, alpha } from "@mui/material/styles";
+import { Button } from "@mui/material";
 
 function App() {
   const [movieList, setMovieList] = useState(INITIAL_MOVIE_LIST);
@@ -57,19 +58,45 @@ function App() {
     },
   }));
 
+  const navigate = useNavigate();
   return (
     <div className="App">
+      {/* Navigation Bar */}
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            <Typography
+            {/* <Typography
               variant="h4"
               noWrap
               component="div"
               sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
             >
               Advait's Movie App
-            </Typography>
+            </Typography> */}
+            <Button
+              style={{
+                backgroundColor: "#3b8ad9",
+                color: "white",
+                fontWeight: "700",
+                boxShadow: "2px 2px 3px #EDF2F6",
+                margin: "0 .1em",
+              }}
+              onClick={() => navigate("/movies-section")}
+            >
+              Movies List
+            </Button>
+            <Button
+              style={{
+                backgroundColor: "#3b8ad9",
+                color: "white",
+                fontWeight: "700",
+                boxShadow: "2px 2px 3px #EDF2F6",
+                margin: "0 2em",
+              }}
+              onClick={() => navigate("/add-movies")}
+            >
+              Add Movie
+            </Button>
 
             <Search>
               <SearchIconWrapper>
@@ -86,14 +113,6 @@ function App() {
         </AppBar>
       </Box>
 
-      <ul>
-        <li>
-          <Link to="/movies-section">Movies</Link>
-        </li>
-        <li>
-          <Link to="/add-movies">Add Movie</Link>
-        </li>
-      </ul>
       <Routes>
         {/* add movies */}
         <Route
@@ -127,13 +146,25 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="404" element={<NotFound />} />
+        {/* <Route path="404" element={<NotFound />} /> */}
+        {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
 
 
-        <Route path="*" element={<Navigate replace to ="/404" />} />
+        <Route path="/movie/:id" element={<MovieDetails movieList={movieList}/>}></Route>
       </Routes>
+
     </div>
   );
+}
+
+function MovieDetails({movieList}){
+  const {id} = useParams();
+  console.log(id);
+  const movie = movieList[id];
+  console.log(movie)
+  return(<div>
+    <h1>Movie Details Page.{movie.name} </h1>
+  </div>)
 }
 
 function Home() {
@@ -154,7 +185,14 @@ function About() {
 
 function NotFound() {
   return (
-    <div style={{ width: "100%", aspectRatio: "1", objectFit: "fill", marginTop:"10em"}}>
+    <div
+      style={{
+        width: "100%",
+        aspectRatio: "1",
+        objectFit: "fill",
+        marginTop: "10em",
+      }}
+    >
       <img src="https://bsmedia.business-standard.com/_media/bs/img/about-page/thumb/464_464/1599716993.jpg" />
     </div>
   );

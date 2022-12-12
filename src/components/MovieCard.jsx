@@ -1,4 +1,4 @@
-import { IconButton } from "@mui/material";
+import {IconButton } from "@mui/material";
 import { useState } from "react";
 import Badge from "@mui/material/Badge";
 import ArrowDropDownCircleIcon from "@mui/icons-material/ArrowDropDownCircle";
@@ -12,15 +12,19 @@ import GradeIcon from "@mui/icons-material/Grade";
 import CardActions from "@mui/material/CardActions";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import InfoIcon from '@mui/icons-material/Info';
+import { useNavigate } from "react-router-dom";
+
 
 export default function MovieCard({ movieList }) {
   const [like, setLike] = useState(0);
   const [dislike, setDislike] = useState(0);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
 
-  return movieList.map((el) => {
+  return movieList.map((el,index, id={index}) => {
     return (
-      <Card sx={{ maxWidth: 345 }} className="movie-card ">
+      <Card sx={{ maxWidth: 345 }} className="movie-card " key={index}>
         <CardMedia
           className="movie-poster pt-4"
           component="img"
@@ -53,14 +57,17 @@ export default function MovieCard({ movieList }) {
 
             {/* movie rating */}
             <Typography variant="h8" component="div" display={"flex"}>
-              <GradeIcon color="error"></GradeIcon> {el.movieRating}
+              <GradeIcon color="error"></GradeIcon> {el.rating}
             </Typography>
           </CardContent>
 
           {/* release date */}
-          <Box>
+          <Box display={"flex"} justifyContent={"space-between"} flexDirection={"row-reverse"} className={"container"}>
+            <IconButton onClick={()=> navigate(`/movies/${index}`)} >
+              <InfoIcon></InfoIcon>
+            </IconButton>
             <Typography variant="h8" component="div" className="release-date">
-              {"Release Date: " + el.releaseDate}
+              {"Release Date: " + el.release}
             </Typography>
           </Box>
         </Box>
