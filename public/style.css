@@ -1,0 +1,25 @@
+.movie-card {
+  margin: 1rem auto 1rem auto;
+  width:400px;
+  background-color: rgb(122, 86, 37);
+
+}
+.top-section{
+  display: flex;  
+  justify-content: space-between;
+  align-items: center;
+}
+/* .tilte-box{
+  display: flex;
+  align-items: center;
+} */
+.title{
+  width:auto;
+}
+.release-date{
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
